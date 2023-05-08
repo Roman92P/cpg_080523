@@ -1,8 +1,9 @@
 package com.for_comprehension.function.L2_optional;
 
+import java.util.Objects;
 import java.util.Optional;
 
-public class HelloOptional {
+public class L1_HelloOptional {
 
     public static void main(String[] args) {
         // imperative
@@ -27,12 +28,33 @@ public class HelloOptional {
             .orElse("default");
     }
 
-    public static Optional<String> findUserById(int id) {
+    static Optional<String> findUserById(int id) {
         if (id == 5) {
             return Optional.of("John");
         }
 
         return Optional.empty();
+    }
+
+    public static class User {
+
+        private final String name;
+        private final String address;
+
+        public User(String name, String address) {
+            Objects.requireNonNull(name);
+            this.name = name;
+            this.address = address;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public Optional<String> getAddress() {
+            return Optional.ofNullable(address);
+        }
+
     }
 
 }
