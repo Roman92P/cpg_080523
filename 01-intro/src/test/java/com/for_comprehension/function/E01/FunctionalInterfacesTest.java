@@ -13,12 +13,20 @@ import com.pholser.junit.quickcheck.generator.InRange;
 import com.pholser.junit.quickcheck.runner.JUnitQuickcheck;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.assertj.core.api.Assertions;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(JUnitQuickcheck.class)
 public class FunctionalInterfacesTest {
+
+    // a + b = b + a
+
+    @Property(trials = 10000)
+    public void l0_sum(Long a, Long b) throws Exception {
+        assertThat(a + b).isEqualTo(b + a);
+    }
 
     @Property
     public void l1_toConstant() {
