@@ -1,6 +1,7 @@
 package com.for_comprehension.function.E01;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.concurrent.Callable;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
@@ -17,7 +18,7 @@ final class FunctionalInterfaces {
      */
     static Supplier<Integer> L1_toConstant() {
         return () -> {
-            return todo();
+            return 42;
         };
     }
 
@@ -25,18 +26,14 @@ final class FunctionalInterfaces {
      * @return a function that takes an input String and returns its uppercased version
      */
     static Function<String, String> L2_toUpperCase() {
-        return s -> {
-            return todo();
-        };
+        return String::toUpperCase;
     }
 
     /**
      * @return a function that converts strings to longs
      */
     static Function<String, Long> L3_toLong() {
-        return s -> {
-            return todo();
-        };
+        return Long::parseLong;
     }
 
     /**
@@ -44,7 +41,7 @@ final class FunctionalInterfaces {
      */
     static IntPredicate L4_to42IntegerPredicate() {
         return i -> {
-            return todo();
+            return i > 42;
         };
     }
 
@@ -53,7 +50,7 @@ final class FunctionalInterfaces {
      */
     static Function<Integer, Predicate<Integer>> L5_toIntegerPredicate() {
         return i -> {
-            return todo();
+            return k -> k > i;
         };
     }
 
@@ -61,8 +58,12 @@ final class FunctionalInterfaces {
      * @return a function that converts a string into URI instance
      */
     static Function<String, URI> L6_toURI() {
-        return str -> {
-            return todo();
+        return s -> {
+            try {
+                return new URI(s);
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
         };
     }
 
@@ -71,7 +72,7 @@ final class FunctionalInterfaces {
      */
     static <T> Function<Supplier<T>, Callable<T>> L7_toCallable() {
         return s -> {
-            return todo();
+            return s::get;
         };
     }
 
@@ -81,7 +82,7 @@ final class FunctionalInterfaces {
      */
     static <T> BinaryOperator<Function<T, T>> L8_functionComposition() {
         return (f1, f2) -> {
-            return todo();
+            return (a) -> f2.apply(f1.apply(a));
         };
     }
 
