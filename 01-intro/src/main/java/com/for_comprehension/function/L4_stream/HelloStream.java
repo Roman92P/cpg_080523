@@ -20,8 +20,33 @@ public class HelloStream {
         Stream.of(1, 2, 3)
             .map(i -> {
                 System.out.println(i);
-                return i;
+                return i * 2;
             });
+
+        // intermediate: map, flatmap, filter, peek
+        // terminal: collect, foreach, findAny, findFirst,
+
+    }
+
+    public static void l3_count_optimized() {
+        List<Integer> ints = Arrays.asList(1, 2, 3, 4, 5);
+
+        long count = ints.stream()
+            .map(i -> i)
+            .map(i -> i)
+            .map(i -> i)
+            .map(i -> i)
+            .map(i -> i)
+            .map(i -> i)
+            .map(i -> i)
+            .map(i -> {
+                System.out.println("do something");
+                return i;
+            })
+            .filter(i -> true)
+            .count();
+
+        System.out.println(count);
 
     }
 
