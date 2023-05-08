@@ -1,6 +1,9 @@
 package com.for_comprehension.function.l3_execute_around;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalTime;
+import java.util.function.Supplier;
 
 public class TemplateMethodLambda {
 
@@ -9,6 +12,8 @@ public class TemplateMethodLambda {
 
         String message = timed(() -> getMessage());
         // duration: 500ms
+
+        System.out.println(message);
     }
 
     public static void sayHello() {
@@ -30,9 +35,12 @@ public class TemplateMethodLambda {
         System.out.println("exiting a method " + LocalTime.now());
     }
 
-    // TODO
-    public static ??? timed(??? ???) {
-        ???
+    public static <T> T timed(Supplier<T> op) {
+        Instant before = Instant.now();
+        T result = op.get();
+        Instant after = Instant.now();
+        System.out.println("duration: " + Duration.between(before, after).toMillis() + "ms");
+        return result;
     }
 
     // loguje czas trwania metody w ms i jednocześnie zwraca wynik operacji
