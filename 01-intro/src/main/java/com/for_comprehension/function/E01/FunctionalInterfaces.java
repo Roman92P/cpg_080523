@@ -81,9 +81,10 @@ final class FunctionalInterfaces {
      * the second one is applied directly to the result of the application of the first one
      */
     static <T> BinaryOperator<Function<T, T>> L8_functionComposition() {
-        return (f1, f2) -> {
-            return (a) -> f2.apply(f1.apply(a));
-        };
+//        return (f1, f2) -> {
+//            return (a) -> f2.apply(f1.apply(a));
+//        };
+        return Function::andThen;
     }
 
     public static <T> T todo() {
