@@ -1,7 +1,15 @@
 package com.for_comprehension.function;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 class HelloWorld {
+
     public static void main(String[] args) {
-        System.out.println("Hello!");
+        List<Integer> of = Collections.unmodifiableList(new ArrayList<>());
+
+        of.clear();
     }
+
 }
