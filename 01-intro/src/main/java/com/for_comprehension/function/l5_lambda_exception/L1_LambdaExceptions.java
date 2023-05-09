@@ -22,7 +22,6 @@ public class L1_LambdaExceptions {
         catch (Exception e) {
             System.out.println("something went wrong");
         }
-
     }
 
     public interface ThrowingFunction<T,R> {
