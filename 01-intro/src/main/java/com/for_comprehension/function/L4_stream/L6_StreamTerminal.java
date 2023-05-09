@@ -2,6 +2,7 @@ package com.for_comprehension.function.L4_stream;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -28,5 +29,8 @@ public class L6_StreamTerminal {
 
         Optional<Integer> reduce = Stream.of(1, 2, 3).reduce((i1, i2) -> i1 + i2);
         Integer reduce2 = Stream.of(1, 2, 3).reduce(0, (i1, i2) -> i1 + i2);
+
+        Optional<Integer> max = Stream.of(1, 2, 3).max(Comparator.naturalOrder());
+        Optional<String> min = Stream.of("aaa", "bb", "dddd").min(Comparator.comparingInt(String::length));
     }
 }
