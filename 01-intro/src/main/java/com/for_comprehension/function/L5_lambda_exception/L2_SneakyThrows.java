@@ -1,4 +1,4 @@
-package com.for_comprehension.function.l5_lambda_exception;
+package com.for_comprehension.function.L5_lambda_exception;
 
 import java.util.Objects;
 import java.util.function.Function;
