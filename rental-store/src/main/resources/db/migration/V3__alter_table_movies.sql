@@ -1,0 +1,3 @@
+ALTER TABLE movies ADD COLUMN year INTEGER;
+
+
