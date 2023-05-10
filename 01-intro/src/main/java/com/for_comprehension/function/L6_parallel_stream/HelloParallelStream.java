@@ -16,7 +16,7 @@ public class HelloParallelStream {
     }
 
     public static <T> T process(T input) {
-        System.out.println("processing... " + input);
+        System.out.println("processing... " + input + " on " + Thread.currentThread().getName());
         try {
             Thread.sleep(1000);
         }
