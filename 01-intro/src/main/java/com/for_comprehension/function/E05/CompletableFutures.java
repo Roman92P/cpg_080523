@@ -17,7 +17,7 @@ class CompletableFutures {
     /**
      * Complete incoming {@link CompletableFuture} manually with value 42
      */
-    static void L1_manualCompletion(CompletableFuture<Intełger> future) {
+    static void L1_manualCompletion(CompletableFuture<Integer> future) {
         todo();
     }
 
@@ -29,16 +29,16 @@ class CompletableFutures {
     }
 
     /**
-     * Run {@link com.for_comprehension.function.misc.UsersClient#getUserById(Integer)} asynchronously
-     * Use the provided id to look up the user
+     * Run {@link com.for_comprehension.function.misc.UsersClient#getUserById(Integer)} asynchronously Use the
+     * provided id to look up the user
      */
     static CompletableFuture<User> L3_runAsync(Integer id) {
         return todo();
     }
 
     /**
-     * Run {@link com.for_comprehension.function.misc.UsersClient#getUserById(Integer)} asynchronously on a given thread pool
-     * Use the provided id to look up the user
+     * Run {@link com.for_comprehension.function.misc.UsersClient#getUserById(Integer)} asynchronously on a given
+     * thread pool Use the provided id to look up the user
      * <p>
      * Essentially, the same as above + execution on a provided thread pool
      */
@@ -47,8 +47,8 @@ class CompletableFutures {
     }
 
     /**
-     * Run {@link com.for_comprehension.function.misc.UsersClient#getUserById(Integer)}
-     * on two different ids and return both users in a List
+     * Run {@link com.for_comprehension.function.misc.UsersClient#getUserById(Integer)} on two different ids and
+     * return both users in a List
      * <p>
      * {@link CompletableFuture#thenCombine(CompletionStage, BiFunction)}
      */
@@ -61,7 +61,8 @@ class CompletableFutures {
      * <p>
      * {@link CompletableFuture#applyToEither(CompletionStage, Function)}
      */
-    static CompletableFuture<Integer> L6_composeFutures(CompletableFuture<Integer> f1, CompletableFuture<Integer> f2) {
+    static CompletableFuture<Integer> L6_composeFutures(CompletableFuture<Integer> f1,
+        CompletableFuture<Integer> f2) {
         return todo();
     }
 
@@ -86,4 +87,5 @@ class CompletableFutures {
     public static <T> T todo() {
         throw new RuntimeException("TODO");
     }
+
 }
