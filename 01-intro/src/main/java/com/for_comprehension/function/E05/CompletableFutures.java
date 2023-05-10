@@ -1,11 +1,13 @@
 package com.for_comprehension.function.E05;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutorService;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import com.for_comprehension.function.misc.User;
 import com.for_comprehension.function.misc.UsersClient;
@@ -18,14 +20,14 @@ class CompletableFutures {
      * Complete incoming {@link CompletableFuture} manually with value 42
      */
     static void L1_manualCompletion(CompletableFuture<Integer> future) {
-        todo();
+        future.complete(42);
     }
 
     /**
      * Complete incoming {@link CompletableFuture} exceptionally with a {@link NullPointerException}
      */
     static void L2_manualExceptionCompletion(CompletableFuture<Integer> future) {
-        todo();
+        future.completeExceptionally(new NullPointerException());
     }
 
     /**
@@ -33,7 +35,7 @@ class CompletableFutures {
      * provided id to look up the user
      */
     static CompletableFuture<User> L3_runAsync(Integer id) {
-        return todo();
+        return CompletableFuture.supplyAsync(() -> usersClient.getUserById(id));
     }
 
     /**
@@ -43,7 +45,7 @@ class CompletableFutures {
      * Essentially, the same as above + execution on a provided thread pool
      */
     static CompletableFuture<User> L4_runAsyncOnACustomPool(Integer id, ExecutorService executor) {
-        return todo();
+        return CompletableFuture.supplyAsync(() -> usersClient.getUserById(id), executor);
     }
 
     /**
@@ -53,7 +55,10 @@ class CompletableFutures {
      * {@link CompletableFuture#thenCombine(CompletionStage, BiFunction)}
      */
     static CompletableFuture<List<User>> L5_runAsyncAndCombine(int id, int id2) {
-        return todo();
+        CompletableFuture<User> u1 = CompletableFuture.supplyAsync(() -> usersClient.getUserById(id));
+        CompletableFuture<User> u2 = CompletableFuture.supplyAsync(() -> usersClient.getUserById(id2));
+
+        return u1.thenCombine(u2, Arrays::asList);
     }
 
     /**
@@ -61,9 +66,11 @@ class CompletableFutures {
      * <p>
      * {@link CompletableFuture#applyToEither(CompletionStage, Function)}
      */
-    static CompletableFuture<Integer> L6_composeFutures(CompletableFuture<Integer> f1,
+    static CompletableFuture<Integer> L6_composeFutures(
+        CompletableFuture<Integer> f1,
         CompletableFuture<Integer> f2) {
-        return todo();
+
+        return f1.applyToEither(f2, i -> i);
     }
 
     /**
@@ -72,7 +79,7 @@ class CompletableFutures {
      * {@link CompletableFuture#anyOf(CompletableFuture[])}
      */
     static <T> T L7_returnValueOfTheFirstCompleted(CompletableFuture<T> f1, CompletableFuture<T> f2) {
-        return todo();
+        return CompletableFuture.anyOf(f1, f2).thenApply(i -> (T) i).join();
     }
 
     /**
@@ -81,7 +88,23 @@ class CompletableFutures {
      * {@link CompletableFuture#allOf(CompletableFuture[])}
      */
     static <T> CompletableFuture<List<T>> L8_returnResultsAsList(List<CompletableFuture<T>> futures) {
-        return todo();
+        // https://shipilev.net/blog/2016/arrays-wisdom-ancients/
+        CompletableFuture<Void> result = CompletableFuture.allOf(
+            futures.toArray(new CompletableFuture[0]));
+
+        for (CompletableFuture<T> future : futures) {
+            future.whenComplete((t, throwable) -> {
+                if (throwable != null) {
+                    result.completeExceptionally(throwable);
+                }
+            });
+        }
+
+        return result
+            .thenApply(__ -> futures)
+            .thenApply(f -> f.stream()
+                .map(CompletableFuture::join)
+                .collect(Collectors.toList()));
     }
 
     public static <T> T todo() {
